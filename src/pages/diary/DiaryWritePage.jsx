@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
 import useDiaryStore from '../../store/useDiaryStore';
 import './DiaryWritePage.css';
 
 export default function DiaryWritePage() {
+  const { entries, setEntries } = useDiaryStore();
   const [date, setDate] = useState('');
   const [weather, setWeather] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [music, setMusic] = useState('');
-  const { entries, setEntries } = useDiaryStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const today = new Date();
-    const formatted = today.toISOString().split('T')[0];
-    setDate(formatted);
+    const today = new Date().toISOString().split('T')[0];
+    setDate(today);
   }, []);
 
   useEffect(() => {
@@ -23,51 +24,43 @@ export default function DiaryWritePage() {
       .catch(() => setWeather('불러오기 실패'));
   }, []);
 
-  const handleSave = () => {
-    if (!title || !content) {
-      alert('제목과 내용을 모두 입력해주세요.');
-      return;
-    }
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const newEntry = {
       id: Date.now(),
       date,
-      title,
-      content,
       weather,
-      music,
+      title,
+      content
     };
-
     const updated = [...entries, newEntry];
     setEntries(updated);
     localStorage.setItem('diaryEntries', JSON.stringify(updated));
-    alert('저장되었습니다!');
-    setTitle('');
-    setContent('');
+    navigate('/diary/view');
   };
 
   return (
     <div className="diary-write-container">
-      <h2>📝 오늘의 다이어리</h2>
-      <div className="diary-meta">
-        <p><strong>📅 날짜:</strong> {date}</p>
-        <p><strong>🌤️ 날씨:</strong> {weather}</p>
+      <div className="title-row">
+        <button onClick={() => navigate('/')} className="back-button"><FiArrowLeft size={20} /></button>
+        <h2>✍️ 오늘의 다이어리</h2>
       </div>
-      <input
-        className="diary-input"
-        type="text"
-        placeholder="제목을 입력하세요"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <textarea
-        className="diary-textarea"
-        placeholder="오늘 있었던 일을 기록해보세요..."
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <button className="save-button" onClick={handleSave}>💾 저장</button>
+      <p>📅 날짜: {date}</p>
+      <p>🌤️ 날씨: {weather}</p>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="제목을 입력하세요"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="오늘 있었던 일을 기록해보세요…"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <button type="submit">💾 저장</button>
+      </form>
     </div>
   );
 }
-

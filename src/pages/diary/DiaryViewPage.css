@@ -6,9 +6,27 @@
   top: 60px;
 }
 
-.diary-list-container h2 {
-  text-align: center;
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.diary-list-container h2 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .diary-list {

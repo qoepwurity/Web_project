@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
 import useDiaryStore from '../../store/useDiaryStore';
 import './DiaryViewPage.css';
 
@@ -20,7 +21,10 @@ export default function DiaryViewPage() {
 
   return (
     <div className="diary-list-container">
-      <h2>📚 나의 다이어리 목록</h2>
+      <div className="title-row">
+        <button onClick={() => navigate('/')} className="back-button"><FiArrowLeft size={20} /></button>
+        <h2>📚 나의 다이어리 목록</h2>
+      </div>
       {entries.length === 0 ? (
         <p className="empty">작성된 다이어리가 없습니다.</p>
       ) : (
