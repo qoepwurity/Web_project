@@ -1,0 +1,65 @@
+.diary-list-container {
+  padding: 6rem 2rem 2rem;
+  max-width: 800px;
+  margin: auto;
+  position: relative;
+  top: 60px;
+}
+
+.diary-list-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.diary-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.diary-card {
+  padding: 1.2rem;
+  border-radius: 12px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s;
+}
+
+.diary-card:hover {
+  transform: translateY(-3px);
+}
+
+.diary-card.clickable {
+  cursor: pointer;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.diary-card h3 {
+  margin: 0.5rem 0 0.3rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.diary-card p {
+  font-size: 1rem;
+  color: #444;
+  white-space: pre-wrap;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+}
+
+.clickable-title {
+  text-decoration: underline;
+  color: #007acc;
+}
