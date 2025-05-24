@@ -1,7 +1,7 @@
 {
   "functions": {
-    "vercel/api/weather.js": {
-      "runtime": "nodejs@18.x"
+    "api/weather.js": {
+      "runtime": "nodejs18.x"
     }
   }
 }
