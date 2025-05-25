@@ -3,8 +3,10 @@ export default async function handler(req, res) {
   const city = 'Seoul';
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
 
+  console.log("🔑 OpenWeather API Key:", apiKey);
+
   try {
-    const response = await fetch(url);
+    const response = await fetch('/api/weather');
     if (!response.ok) throw new Error('API 응답 오류');
     const data = await response.json();
 
