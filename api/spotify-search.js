@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   const { q } = req.query;
 
-  const tokenRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/spotify-token`);
+  const tokenRes = await fetch(`${process.env.VITE_NEXT_PUBLIC_BASE_URL}/api/spotify-token`);
   const { access_token } = await tokenRes.json();
 
   const searchRes = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(q)}&type=track&limit=5`, {
