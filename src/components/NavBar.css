@@ -1,9 +1,10 @@
 .navbar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0.6rem 1.5rem;
-  background-color: #2e2e2e;
-  color: white;
+  background-color: #2e2e2e; /* 고정 배너색 */
+  color: black;              /* 고정 텍스트색 */
   position: fixed;
   top: 0;
   left: 0;
@@ -13,24 +14,38 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-logo {
   font-size: 1.2rem;
   font-weight: bold;
-  letter-spacing: 0.5px;
+  color: white;
+  text-decoration: none;
 }
 
-.page-top-button {
-  margin-top: 70px;
+.nav-right {
   display: flex;
-  justify-content: flex-start;
-  padding-left: 2rem;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto; /* 오른쪽 정렬 */
 }
 
-.page-top-button button {
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
-  color: #007acc;
-  cursor: pointer;
-  text-decoration: underline;
+.nav-right a {
+  color: black;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+
+.nav-right a:hover {
+  opacity: 0.7;
+}
+
+/* 공통 버튼 텍스트 색 고정 */
+button {
+  color: black;
 }

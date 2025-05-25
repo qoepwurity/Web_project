@@ -4,6 +4,9 @@
   width: 90%;
   margin: 80px auto 0;
   padding: 2rem;
+  padding-top: 30px;
+  padding-left: 2rem;
+  padding-right: 4rem;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);

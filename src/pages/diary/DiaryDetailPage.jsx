@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import useAuthStore from '../../store/useAuthStore';
 import './DiaryDetailPage.css';
 
 export default function DiaryDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { currentUser } = useAuthStore();
+
   const [entry, setEntry] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    const stored = localStorage.getItem('diaryEntries');
+    if (!currentUser?.email) return;
+
+    const key = `diaryEntries:${currentUser.email}`;
+    const stored = localStorage.getItem(key);
     if (stored) {
       const entries = JSON.parse(stored);
       const found = entries.find((e) => String(e.id) === String(id));
@@ -22,21 +28,23 @@ export default function DiaryDetailPage() {
         setContent(found.content);
       }
     }
-  }, [id]);
+  }, [id, currentUser]);
 
   const handleDelete = () => {
-    const stored = JSON.parse(localStorage.getItem('diaryEntries'));
+    const key = `diaryEntries:${currentUser.email}`; 
+    const stored = JSON.parse(localStorage.getItem(key));
     const updated = stored.filter((e) => String(e.id) !== String(id));
-    localStorage.setItem('diaryEntries', JSON.stringify(updated));
+    localStorage.setItem(key, JSON.stringify(updated));
     navigate('/diary/view');
   };
 
   const handleSave = () => {
-    const stored = JSON.parse(localStorage.getItem('diaryEntries'));
+    const key = `diaryEntries:${currentUser.email}`;
+    const stored = JSON.parse(localStorage.getItem(key));
     const updated = stored.map((e) =>
       String(e.id) === String(id) ? { ...e, title, content } : e
     );
-    localStorage.setItem('diaryEntries', JSON.stringify(updated));
+    localStorage.setItem(key, JSON.stringify(updated));
     setEditMode(false);
     setEntry({ ...entry, title, content });
   };
@@ -53,14 +61,24 @@ export default function DiaryDetailPage() {
     <div className="diary-detail-container">
       <div className="diary-detail-card">
         <div className="card-header">
-          <button className="back-button" onClick={() => navigate('/diary/view')}><FiArrowLeft size={20} /></button>
+          <button className="back-button" onClick={() => navigate('/diary/view')}>
+            <FiArrowLeft size={20} />
+          </button>
           <span>📅 {entry.date}</span>
           <span>🌦️ {entry.weather}</span>
         </div>
         {editMode ? (
           <>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} className="edit-input" />
-            <textarea value={content} onChange={(e) => setContent(e.target.value)} className="edit-textarea" />
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="edit-input"
+            />
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="edit-textarea"
+            />
             <button onClick={handleSave} className="save-button">저장</button>
           </>
         ) : (

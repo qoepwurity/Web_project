@@ -1,5 +1,5 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -9,20 +9,65 @@ import DiaryWritePage from './pages/diary/DiaryWritePage';
 import DiaryDetailPage from './pages/diary/DiaryDetailPage';
 import QnaPage from './pages/QnaPage';
 import MyPage from './pages/MyPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import useDarkModeStore from './store/useDarkModeStore';
 
 function App() {
+  const { isDark } = useDarkModeStore();
+
+  useEffect(() => {
+    const body = document.body;
+    if (isDark) body.classList.add('dark');
+    else body.classList.remove('dark');
+  }, [isDark]);
+
   return (
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/diary/view" element={<DiaryViewPage />} />
-        <Route path="/diary/write" element={<DiaryWritePage />} />
-        <Route path="/diary/detail/:id" element={<DiaryDetailPage />} />
-        <Route path="/qna" element={<QnaPage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/diary" element={<HomePage />} />
+        <Route
+          path="/diary/view"
+          element={
+            <ProtectedRoute>
+              <DiaryViewPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/diary/write"
+          element={
+            <ProtectedRoute>
+              <DiaryWritePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/diary/detail/:id"
+          element={
+            <ProtectedRoute>
+              <DiaryDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/diary/qna"
+          element={
+            <ProtectedRoute>
+              <QnaPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/diary/mypage"
+          element={
+            <ProtectedRoute>
+              <MyPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

@@ -1,9 +1,23 @@
+.diary-list-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1rem;
+}
+
+.diary-list-outer {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
 .diary-list-container {
-  padding: 6rem 2rem 2rem;
-  max-width: 800px;
-  margin: auto;
-  position: relative;
-  top: 60px;
+  width: 100%;
 }
 
 .title-row {
@@ -80,4 +94,10 @@
 .clickable-title {
   text-decoration: underline;
   color: #007acc;
+}
+
+.diary-view-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 1rem 2rem;
 }

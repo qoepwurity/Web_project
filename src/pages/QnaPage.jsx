@@ -32,7 +32,7 @@ export default function Qna() {
     <div className="qna-container">
       <div className="qna-card">
         <div className="title-row">
-          <button onClick={() => navigate('/')} className="back-button"><FiArrowLeft size={20} /></button>
+          <button onClick={() => navigate('/diary')} className="back-button"><FiArrowLeft size={20} /></button>
           <h2>❓ QnA 게시판</h2>
         </div>
         <form onSubmit={handleSubmit}>

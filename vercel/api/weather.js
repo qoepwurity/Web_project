@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const apiKey = process.env.OPENWEATHER_API_KEY;
+  const apiKey = process.env.VITE_WEATHER_API_KEY;
   const city = 'Seoul';
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
 
