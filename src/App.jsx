@@ -11,6 +11,7 @@ import QnaPage from './pages/QnaPage';
 import MyPage from './pages/MyPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import useDarkModeStore from './store/useDarkModeStore';
+import DiaryStart from './pages/DiaryStart';
 
 function App() {
   const { isDark } = useDarkModeStore();
@@ -25,7 +26,8 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<DiaryStart />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/diary" element={<HomePage />} />
         <Route

@@ -8,9 +8,6 @@ export default async function handler(req, res) {
   const clientId = process.env.OPEN_SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.OPEN_SPOTIFY_CLIENT_SECRET;
 
-  console.log('🔑 Spotify Client ID:', clientId);
-  console.log('🔑 Spotify Client Secret:', clientSecret);
-
   const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
   try {

@@ -22,7 +22,4 @@ export default async function handler(req, res) {
     console.error('날씨 API 에러:', error);
     res.status(500).json({ error: '날씨 정보를 가져오는 데 실패했습니다.' });
   }
-
-  console.log('apiKey:', process.env.API_KEY);
-  console.log('response:', await response.text());
 }
