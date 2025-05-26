@@ -9,7 +9,7 @@ import DiaryWritePage from './pages/diary/DiaryWritePage';
 import DiaryDetailPage from './pages/diary/DiaryDetailPage';
 import QnaPage from './pages/QnaPage';
 import MyPage from './pages/MyPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 import useDarkModeStore from './store/useDarkModeStore';
 import DiaryStart from './pages/DiaryStart';
 
