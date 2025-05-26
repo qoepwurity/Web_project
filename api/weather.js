@@ -5,9 +5,9 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // const apiKey = process.env.VITE_OPEN_WEATHER_API_KEY;
+  const apiKey = process.env.OPEN_WEATHER_API_KEY;
   const city = 'Seoul';
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f71cc028639613fc079184c3b8d35bbb&units=metric&lang=kr`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
 
   try {
     const response = await axios.get(url);
