@@ -39,7 +39,7 @@ export default function DiaryWritePage() {
   const fetchWeather = async () => {
     try {
       const res = await axios.get(`https://web-project-sand-psi.vercel.app/api/weather?city=${city}`);
-      const emoji = res.data.emoji || '';
+      const emoji = res.data.emoji || '🌤️';
       const description = res.data.weather || '정보 없음';
       setWeather(`${emoji} ${description}`);
     } catch (err) {
@@ -101,7 +101,7 @@ export default function DiaryWritePage() {
         </button>
       </div>
 
-      <p>🌤️ 날씨: {weather}</p>
+      <p>날씨: {weather}</p>
 
       <div style={{ margin: '1rem 0' }}>
         <MusicSearchBox onSelect={(music) => setSelectedMusic(music)} />

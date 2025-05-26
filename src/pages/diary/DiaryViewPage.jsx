@@ -95,7 +95,7 @@ export default function DiaryViewPage() {
                 <div className="diary-card clickable" key={entry.id} onClick={() => handleViewDetail(entry.id)}>
                   <div className="card-header">
                     <span className="date">📅 {entry.date}</span>
-                    <span className="weather">🌤️ {entry.weather}</span>
+                    <span className="weather">날씨: {entry.weather}</span>
                   </div>
                   <h3 className="clickable-title">{entry.title}</h3>
                   <p>{entry.content.length > 100 ? entry.content.slice(0, 100) + '...' : entry.content}</p>
