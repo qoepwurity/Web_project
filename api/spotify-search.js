@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const tokenRes = await axios.get(`${process.env.VITE_OPEN_NEXT_PUBLIC_BASE_URL}/api/spotify-token`);
+    const tokenRes = await axios.get(`${process.env.OPEN_NEXT_PUBLIC_BASE_URL}/api/spotify-token`);
     const access_token = tokenRes.data.access_token;
 
     const searchRes = await axios.get(

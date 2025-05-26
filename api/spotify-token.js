@@ -5,8 +5,8 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const clientId = bfca6b033ec14f9eadfc18db5aa5d582;
-  const clientSecret = process.env.VITE_OPEN_SPOTIFY_CLIENT_SECRET;
+  const clientId = process.env.OPEN_SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.OPEN_SPOTIFY_CLIENT_SECRET;
 
   console.log('🔑 Spotify Client ID:', clientId);
   console.log('🔑 Spotify Client Secret:', clientSecret);
