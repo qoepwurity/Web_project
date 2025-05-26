@@ -1,69 +1,57 @@
 import { create } from 'zustand';
 
 const useAuthStore = create((set) => ({
-    isLoggedIn: false,
-    currentUser: null,
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+
+    register: (email, password) => {
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const exists = storedUsers.find((u) => u.email === email);
+        if (exists) return false;
+
+        const now = new Date().toISOString();
+        const newUser = {
+            email,
+            password,
+            createdAt: now
+        };
+
+        const updatedUsers = [...storedUsers, newUser];
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        set({ currentUser: newUser });
+        return true;
+    },
+
 
     login: (email, password) => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const found = users.find((user) => user.email === email && user.password === password);
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const found = storedUsers.find((u) => u.email === email && u.password === password);
         if (found) {
-            set({ isLoggedIn: true, currentUser: found });
-            localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('currentUser', JSON.stringify(found));
+            set({ currentUser: found });
             return true;
         }
         return false;
     },
 
     logout: () => {
-        set({ isLoggedIn: false, currentUser: null });
-        localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('currentUser');
+        set({ currentUser: null });
     },
 
-    register: (email, password) => {
+    updateUserName: (newName) => {
+        const current = JSON.parse(localStorage.getItem('currentUser'));
+        const updated = { ...current, name: newName };
+        localStorage.setItem('currentUser', JSON.stringify(updated));
+
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        const exists = users.some((user) => user.email === email);
-        if (exists) return false;
-
-        const newUser = {
-            email,
-            password,
-            createdAt: new Date().toISOString().slice(0, 10),
-        };
-
-        const updatedUsers = [...users, newUser];
+        const updatedUsers = users.map((u) =>
+            u.email === updated.email ? updated : u
+        );
         localStorage.setItem('users', JSON.stringify(updatedUsers));
 
-        set({ isLoggedIn: true, currentUser: newUser });
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-
-        return true;
-    },
-
-    restoreSession: () => {
-        const user = localStorage.getItem('currentUser');
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        if (user && isLoggedIn) {
-            set({ isLoggedIn: true, currentUser: JSON.parse(user) });
-        }
-    },
-
-    updateUserName: (name) => {
-        const user = JSON.parse(localStorage.getItem('currentUser'));
-        if (!user) return;
-
-        const updatedUser = { ...user, name };
-        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const updatedUsers = users.map((u) => u.email === user.email ? updatedUser : u);
-        localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-        set({ currentUser: updatedUser });
-    },
-
+        set({ currentUser: updated });
+    }
 
 }));
 

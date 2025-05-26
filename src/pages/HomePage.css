@@ -70,12 +70,3 @@ body, html {
 .diary-card .weather {
   color: var(--text-color);
 }
-
-.logout-button {
-  background-color: #f44336;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}

@@ -12,12 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    const body = document.body;
-    if (isDark) {
-      body.classList.add('dark');
-    } else {
-      body.classList.remove('dark');
-    }
+    document.body.classList.toggle('dark', isDark);
   }, [isDark]);
 
   const handleLogin = (e) => {

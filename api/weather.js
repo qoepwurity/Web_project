@@ -1,25 +1,28 @@
-export default async function handler(req, res) {
-  const apiKey = process.env.VITE_WEATHER_API_KEY;
-  const city = 'Seoul';
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
+import axios from 'axios';
 
-  console.log("🔑 OpenWeather API Key:", apiKey);
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // const apiKey = process.env.VITE_OPEN_WEATHER_API_KEY;
+  const city = 'Seoul';
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f71cc028639613fc079184c3b8d35bbb&units=metric&lang=kr`;
 
   try {
-    const response = await fetch('/api/weather');
-    if (!response.ok) throw new Error('API 응답 오류');
-    const data = await response.json();
-
-    const weather = data.weather?.[0]?.description || '정보 없음';
-    const temp = data.main?.temp || null;
+    const response = await axios.get(url);
+    const data = response.data;
 
     res.status(200).json({
       city,
-      weather,
-      temperature: temp
+      weather: data.weather?.[0]?.description || '정보 없음',
+      temperature: data.main?.temp,
     });
-  } catch (err) {
-    console.error('날씨 API 에러:', err);
+  } catch (error) {
+    console.error('날씨 API 에러:', error);
     res.status(500).json({ error: '날씨 정보를 가져오는 데 실패했습니다.' });
   }
+
+  console.log('apiKey:', process.env.API_KEY);
+  console.log('response:', await response.text());
 }

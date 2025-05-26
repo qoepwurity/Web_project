@@ -48,7 +48,7 @@
 
 .name-input-row input {
   flex: 1;
-  height: 40px;
+  height: 20px;
   padding: 0 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -57,7 +57,7 @@
 }
 
 .name-input-row button {
-  height: 40px;
+  height: 10px;
   background-color: #4caf50;
   color: white;
   border: none;

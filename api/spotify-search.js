@@ -1,23 +1,39 @@
+import axios from 'axios';
+
 export default async function handler(req, res) {
-  const { q } = req.query;
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const tokenRes = await fetch(`${process.env.VITE_NEXT_PUBLIC_BASE_URL}/api/spotify-token`);
-  const { access_token } = await tokenRes.json();
+  const query = req.query.q;
+  if (!query) {
+    return res.status(400).json({ error: '검색어(q)가 필요합니다.' });
+  }
 
-  const searchRes = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(q)}&type=track&limit=5`, {
-    headers: {
-      Authorization: `Bearer ${access_token}`
-    }
-  });
+  try {
+    const tokenRes = await axios.get(`${process.env.VITE_OPEN_NEXT_PUBLIC_BASE_URL}/api/spotify-token`);
+    const access_token = tokenRes.data.access_token;
 
-  const searchData = await searchRes.json();
+    const searchRes = await axios.get(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=5`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
 
-  const tracks = searchData.tracks?.items.map(track => ({
-    name: track.name,
-    artist: track.artists[0]?.name,
-    album: track.album.name,
-    url: track.external_urls.spotify
-  }));
+    const items = searchRes.data.tracks.items;
 
-  res.status(200).json(tracks);
+    const results = items.map((track) => ({
+      name: track.name,
+      artist: track.artists[0]?.name || 'Unknown',
+      image: track.album.images[1]?.url || '',
+    }));
+
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('❌ Spotify 검색 오류:', err.response?.data || err.message);
+    res.status(500).json({ error: 'Spotify 검색 실패' });
+  }
 }

@@ -13,6 +13,7 @@ export default function DiaryDetailPage() {
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     if (!currentUser?.email) return;
@@ -31,7 +32,7 @@ export default function DiaryDetailPage() {
   }, [id, currentUser]);
 
   const handleDelete = () => {
-    const key = `diaryEntries:${currentUser.email}`; 
+    const key = `diaryEntries:${currentUser.email}`;
     const stored = JSON.parse(localStorage.getItem(key));
     const updated = stored.filter((e) => String(e.id) !== String(id));
     localStorage.setItem(key, JSON.stringify(updated));
@@ -67,6 +68,7 @@ export default function DiaryDetailPage() {
           <span>📅 {entry.date}</span>
           <span>🌦️ {entry.weather}</span>
         </div>
+
         {editMode ? (
           <>
             <input
@@ -85,6 +87,37 @@ export default function DiaryDetailPage() {
           <>
             <h2>{entry.title}</h2>
             <p>{entry.content}</p>
+
+            {entry.image && (
+              <div className="image-preview">
+                <img
+                  src={entry.image}
+                  alt="첨부 이미지"
+                  onClick={() => setLightboxOpen(true)}
+                  style={{ maxWidth: '100%', borderRadius: '10px', cursor: 'zoom-in' }}
+                />
+              </div>
+            )}
+
+            {lightboxOpen && (
+              <div
+                className="lightbox"
+                onClick={() => setLightboxOpen(false)}
+              >
+                <img
+                  src={entry.image}
+                  alt="확대 이미지"
+                  className="lightbox-image"
+                />
+              </div>
+            )}
+
+            {entry.music && (
+              <p style={{ marginTop: '1rem' }}>
+                🎵 <strong>{entry.music.name}</strong> - {entry.music.artist}
+              </p>
+            )}
+
             <div className="button-row">
               <button onClick={() => setEditMode(true)} className="edit-button">수정</button>
               <button onClick={handleDelete} className="delete-button">삭제</button>

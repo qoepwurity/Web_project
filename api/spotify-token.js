@@ -1,21 +1,35 @@
+import axios from 'axios';
+
 export default async function handler(req, res) {
-  const clientId = process.env.VITE_SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.VITE_SPOTIFY_CLIENT_SECRET;
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  console.log("🔑 song API Key:", clientId);
-  console.log("🔑 song API Key:", clientSecret);
+  const clientId = bfca6b033ec14f9eadfc18db5aa5d582;
+  const clientSecret = process.env.VITE_OPEN_SPOTIFY_CLIENT_SECRET;
 
-  const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+  console.log('🔑 Spotify Client ID:', clientId);
+  console.log('🔑 Spotify Client Secret:', clientSecret);
 
-  const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${auth}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials',
-  });
+  const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
-  const data = await tokenRes.json();
-  res.status(200).json(data);
+  try {
+    const response = await axios.post(
+      'https://accounts.spotify.com/api/token',
+      new URLSearchParams({
+        grant_type: 'client_credentials',
+      }),
+      {
+        headers: {
+          Authorization: `Basic ${basic}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error('❌ Spotify 토큰 요청 실패:', error.response?.data || error.message);
+    res.status(500).json({ error: '토큰 요청 실패' });
+  }
 }
