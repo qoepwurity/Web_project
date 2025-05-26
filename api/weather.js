@@ -24,11 +24,12 @@
 //   }
 // }
 
+
 import axios from 'axios';
 
 export default async function handler(req, res) {
   const city = req.query.city || 'Seoul';
-  const apiKey = process.env.VITE_OPEN_WEATHER_API_KEY;
+  const apiKey = process.env.OPEN_WEATHER_API_KEY;
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
 
