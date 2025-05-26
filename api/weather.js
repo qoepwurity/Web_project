@@ -25,7 +25,6 @@ export default async function handler(req, res) {
     res.status(200).json({
       city,
       weather: description,
-      temperature: data.main?.temp,
       emoji,
     });
   } catch (error) {

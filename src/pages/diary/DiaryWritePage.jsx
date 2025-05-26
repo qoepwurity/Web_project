@@ -70,7 +70,7 @@ export default function DiaryWritePage() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (imagePreview) URL.revokeObjectURL(imagePreview); // 메모리 해제
+      if (imagePreview) URL.revokeObjectURL(imagePreview);
       const url = URL.createObjectURL(file);
       setImage(file);
       setImagePreview(url);
