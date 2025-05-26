@@ -39,7 +39,7 @@ export default function DiaryWritePage() {
   const fetchWeather = async () => {
     try {
       const res = await axios.get(`https://web-project-sand-psi.vercel.app/api/weather?city=${city}`);
-      const emoji = res.data.emoji || '🌤️';
+      const emoji = res.data.emoji || '';
       const description = res.data.weather || '정보 없음';
       setWeather(`${emoji} ${description}`);
     } catch (err) {

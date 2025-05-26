@@ -66,7 +66,7 @@ export default function DiaryDetailPage() {
             <FiArrowLeft size={20} />
           </button>
           <span>📅 {entry.date}</span>
-          <span>🌦️ {entry.weather}</span>
+          <span>날씨: {entry.weather}</span>
         </div>
 
         {editMode ? (
