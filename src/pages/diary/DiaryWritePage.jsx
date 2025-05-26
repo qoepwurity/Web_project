@@ -11,6 +11,7 @@ export default function DiaryWritePage() {
   const { addEntry } = useDiaryStore();
   const { currentUser } = useAuthStore();
   const [date, setDate] = useState('');
+  const [city, setCity] = useState('Seoul'); // ✅ 도시명 입력
   const [weather, setWeather] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -28,7 +29,7 @@ export default function DiaryWritePage() {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit'
+        second: '2-digit',
       })
       .replace(/\. /g, '-')
       .replace('.', '')
@@ -36,18 +37,16 @@ export default function DiaryWritePage() {
     setDate(formatted);
   }, []);
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const res = await axios.get('https://web-project-sand-psi.vercel.app/api/weather');
-        setWeather(res.data.weather || '정보 없음');
-      } catch (err) {
-        setWeather('불러오기 실패');
-        console.error('날씨 fetch 실패:', err);
-      }
-    };
-    fetchWeather();
-  }, []);
+  // ✅ 날씨 조회 함수
+  const fetchWeather = async () => {
+    try {
+      const res = await axios.get(`https://web-project-sand-psi.vercel.app/api/weather?city=${city}`);
+      setWeather(res.data.emoji + ' ' + res.data.weather);
+    } catch (err) {
+      setWeather('불러오기 실패');
+      console.error('날씨 fetch 실패:', err);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,6 +54,7 @@ export default function DiaryWritePage() {
     const newEntry = {
       id: Date.now(),
       date,
+      city,
       weather,
       title,
       content,
@@ -85,6 +85,18 @@ export default function DiaryWritePage() {
       </div>
 
       <p>📅 날짜: {date}</p>
+
+      {/* ✅ 지역 입력 및 날씨 확인 버튼 */}
+      <div style={{ margin: '1rem 0' }}>
+        <input
+          type="text"
+          placeholder="도시명을 입력하세요 (예: Seoul)"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          style={{ padding: '0.5rem', marginRight: '0.5rem' }}
+        />
+        <button onClick={fetchWeather}>🌦️ 날씨 확인</button>
+      </div>
       <p>🌤️ 날씨: {weather}</p>
 
       <div style={{ margin: '1rem 0' }}>
@@ -103,13 +115,11 @@ export default function DiaryWritePage() {
           accept="image/*"
           onChange={handleImageChange}
         />
-
         {imagePreview && (
           <div style={{ margin: '1rem 0' }}>
             <img src={imagePreview} alt="미리보기" style={{ maxWidth: '100%', borderRadius: '8px' }} />
           </div>
         )}
-
         <input
           type="text"
           placeholder="제목을 입력하세요"
