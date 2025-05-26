@@ -19,7 +19,7 @@ export default function LoginPage() {
     e.preventDefault();
     const success = login(email, password);
     if (success) {
-      navigate('/');
+      navigate('/dashboard');
     } else {
       alert('이메일 또는 비밀번호가 올바르지 않습니다.');
     }

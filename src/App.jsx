@@ -26,8 +26,8 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<DiaryStart />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DiaryStart />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/diary" element={<HomePage />} />
         <Route
