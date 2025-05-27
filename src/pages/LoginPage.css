@@ -56,10 +56,10 @@ body.dark {
 }
 
 .login-form button {
-  background-color: #4caf50;
+  background-color: #007acc;
   color: white;
   border: none;
-  padding: 0.6rem;
+  padding: 0.8rem;
   border-radius: 6px;
   cursor: pointer;
 }

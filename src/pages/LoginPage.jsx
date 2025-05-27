@@ -46,7 +46,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">로그인</button>
+          <button type="buton">로그인</button>
         </form>
         <p>
           계정이 없으신가요?{' '}

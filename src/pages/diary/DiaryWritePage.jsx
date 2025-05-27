@@ -96,7 +96,7 @@ export default function DiaryWritePage() {
           onChange={(e) => setCity(e.target.value)}
           style={{ padding: '0.5rem', borderRadius: '6px', border: '1px solid #ccc', flex: 1 }}
         />
-        <button onClick={fetchWeather} style={{ padding: '0.5rem 1rem', borderRadius: '6px', backgroundColor: '#2196f3', color: 'white', border: 'none' }}>
+        <button onClick={fetchWeather} style={{ padding: '0.5rem 1rem', borderRadius: '6px', backgroundColor: '#2196f3', color: 'white', border: 'none', marginTop: '35px' }}>
           🌦️ 날씨 확인
         </button>
       </div>
